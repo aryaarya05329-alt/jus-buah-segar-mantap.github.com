@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>resepnich - Dunia Jus Buah Segar</title>
+  <style>
+    /* Reset & Font */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f7fafc;
+      color: #2d3748;
+    }
+
+    /* Header & Navigasi */
+    header {
+      background: #ffffff;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 900;
+      color: #ff4757;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #2ed573;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    nav a.btn-resep { background-color: #ff4757; }
+    nav a.btn-about { background-color: #ffa502; }
+    nav a.btn-kategori { background-color: #2ed573; }
+
+    nav a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #fff5f5 0%, #e6fffa 100%);
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      color: #2f3542;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #57606f;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      color: #2f3542;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Grid Resep Terpopuler */
+    .grid-terpopuler {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .card-btn {
+      margin-top: auto;
+      text-decoration: none;
+      text-align: center;
+      padding: 12px;
+      border-radius: 12px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      transition: opacity 0.2s;
+    }
+
+    .card-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Tema Warna Per Kartu */
+    .card-stroberi .card-title { color: #ff4757; }
+    .card-stroberi .card-tag { background-color: #ffe0e3; color: #ff4757; }
+    .card-stroberi .card-btn { background-color: #ff4757; }
+
+    .card-jeruk .card-title { color: #ffa502; }
+    .card-jeruk .card-tag { background-color: #ffeaa7; color: #d35400; }
+    .card-jeruk .card-btn { background-color: #ffa502; }
+
+    .card-mangga .card-title { color: #2ed573; }
+    .card-mangga .card-tag { background-color: #dcdde1; color: #2f3542; }
+    .card-mangga .card-btn { background-color: #2ed573; }
+
+    /* Resep Terbaru Section */
+    .resep-terbaru {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      margin-bottom: 60px;
+    }
+
+    .list-terbaru {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .item-terbaru {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #f1f2f6;
+      border-radius: 12px;
+      font-weight: 700;
+      color: #2f3542;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .item-terbaru:hover {
+      background: #e4e7eb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #2f3542;
+      color: #ffffff;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigasi -->
+  <header>
+    <div class="logo">resepnich<span>.</span></div>
+    <nav>
+      <a href="#resep" class="btn-resep">Resep</a>
+      <a href="#about" class="btn-about">About</a>
+      <a href="#kategori" class="btn-kategori">Kategori</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Dunia Jus Buah Segar: Resepnich</h1>
+    <p>Temukan kelezatan jus buah sehat dan kaya rasa di sini.</p>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <h2 class="section-title">🍓 Jus Terpopuler</h2>
+
+    <div class="grid-terpopuler">
+      <!-- Card 1: Stroberi -->
+      <div class="card card-stroberi">
+        <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80" alt="Jus Stroberi" class="card-img">
+        <div class="card-body">
+          <h3 class="card-title">Jus Buah Stroberi</h3>
+          <span class="card-tag">Segar, Asam, Manis</span>
+          <a href="#" class="card-btn">Lihat Resep</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Jeruk -->
+      <div class="card card-jeruk">
+        <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80" alt="Jus Jeruk" class="card-img">
+        <div class="card-body">
+          <h3 class="card-title">Jus Buah Jeruk</h3>
+          <span class="card-tag">Kaya Vitamin C</span>
+          <a href="#" class="card-btn">Lihat Resep</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Mangga -->
+      <div class="card card-mangga">
+        <img src="https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80" alt="Jus Mangga" class="card-img">
+        <div class="card-body">
+          <h3 class="card-title">Jus Buah Mangga</h3>
+          <span class="card-tag">Manis & Manis Tropis</span>
+          <a href="#" class="card-btn">Lihat Resep</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resep Terbaru -->
+    <div class="resep-terbaru">
+      <h2 class="section-title">🍍 Resep Terbaru</h2>
+      <div class="list-terbaru">
+        <a href="#" class="item-terbaru">🥑 Avocado Smoothie</a>
+        <a href="#" class="item-terbaru">🍍 Pineapple Delight</a>
+        <a href="#" class="item-terbaru">🥭 Mangga Shake</a>
+        <a href="#" class="item-terbaru">🍋 Lemonade Fresh</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 resepnich. All rights reserved. Hosted on GitHub Pages.</p>
+  </footer>
+
+</body>
+</html>
