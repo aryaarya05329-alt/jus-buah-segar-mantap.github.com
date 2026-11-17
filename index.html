@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FreshSip – Jus Buah Segar 3D</title>
+<style>
+:root{--bg:#fff7ec;--bg2:#ffe3d0;--card:#ffffff;--tx:#3b1d12;--mut:#8a6a5c;--ac:#ff6b35;--ac2:#2fa84f;--sh:0 14px 40px rgba(255,107,53,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1210;--bg2:#2c1712;--card:#2a1b17;--tx:#fff0e4;--mut:#d1aa98;--sh:0 14px 40px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--bg:#1d1210;--bg2:#2c1712;--card:#2a1b17;--tx:#fff0e4;--mut:#d1aa98;--sh:0 14px 40px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:"Poppins","Segoe UI",system-ui,sans-serif;color:var(--tx);background:linear-gradient(160deg,var(--bg),var(--bg2));min-height:100vh;overflow-x:hidden}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;justify-content:space-between;align-items:center;padding:12px 6vw;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px)}
+nav b{font-size:1.4rem;color:var(--ac)}nav a{color:var(--tx);text-decoration:none;font-weight:600;margin-left:18px}
+.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:30px 6vw 50px;max-width:1200px;margin:auto}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;margin:0 0 14px}
+.hero h1 span{color:var(--ac)}.hero p{color:var(--mut);font-size:1.05rem;max-width:460px}
+.btn{display:inline-block;border:0;cursor:pointer;background:linear-gradient(135deg,#ff8a3d,#ff4d6d);color:#fff;font-weight:700;padding:14px 28px;border-radius:40px;font-size:1rem;text-decoration:none;box-shadow:0 10px 24px rgba(255,77,109,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+#hero3d{width:100%;height:440px;display:block}
+h2{text-align:center;font-size:2rem;margin:10px 0 4px}.sub{text-align:center;color:var(--mut);margin-bottom:28px}
+.wrap{display:grid;grid-template-columns:1fr 340px;gap:26px;max-width:1200px;margin:auto;padding:0 6vw 60px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px;perspective:900px}
+.card{background:var(--card);border-radius:24px;padding:12px 14px 16px;box-shadow:var(--sh);text-align:center;transition:transform .25s ease;transform-style:preserve-3d;border-top:6px solid var(--c)}
+.card:hover{transform:translateY(-8px) rotateY(-3deg)}
+.card canvas{width:100%;height:190px;display:block;cursor:pointer;position:relative;z-index:1}
+.card h3{margin:4px 0 2px}.card small{color:var(--mut);display:block;min-height:36px}
+.price{font-weight:800;color:var(--ac);font-size:1.15rem;margin:6px 0}
+.qty{display:flex;justify-content:center;align-items:center;gap:12px;position:relative;z-index:3}
+.qty button{width:36px;height:36px;border-radius:50%;border:0;background:var(--c);color:#fff;font-size:1.3rem;font-weight:700;cursor:pointer;transition:transform .15s}
+.qty button:active{transform:scale(.85)}.qty span{min-width:22px;font-weight:700}
+.cart{background:var(--card);border-radius:24px;padding:20px;box-shadow:var(--sh);position:sticky;top:80px}
+.cart h3{margin:0 0 10px}.row{display:flex;justify-content:space-between;font-size:.92rem;padding:5px 0;border-bottom:1px dashed var(--mut)}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin:12px 0}
+.cart input,.cart textarea{width:100%;margin-bottom:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--mut);background:var(--bg);color:var(--tx);font:inherit}
+.cart .btn{width:100%}.empty{color:var(--mut);font-size:.9rem}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}
+#modal div{background:var(--card);padding:28px;border-radius:24px;max-width:380px;text-align:center}
+footer{text-align:center;color:var(--mut);padding:24px;font-size:.9rem}
+@media(max-width:860px){.hero{grid-template-columns:1fr;text-align:center}.hero p{margin:auto auto 18px}.wrap{grid-template-columns:1fr}.cart{position:static}#hero3d{height:340px}}
+</style>
+</head>
+<body>
+<nav><b>🍹 FreshSip</b><div><a href="#menu">Menu</a><a href="#pesan">Pesan</a></div></nav>
+
+<section class="hero">
+  <div>
+    <h1>Jus Buah <span>Segar</span>, Diperas Langsung untukmu!</h1>
+    <p>100% buah asli tanpa pengawet. Stroberi, jeruk, mangga, alpukat, nanas, dan lemon – dingin, manis, dan menyegarkan.</p>
+    <a class="btn" href="#menu">Pesan Sekarang</a>
+  </div>
+  <canvas id="hero3d"></canvas>
+</section>
+
+<h2 id="menu">Menu Jus Kami</h2>
+<p class="sub">Putar & lihat jus 3D, lalu tambahkan ke pesananmu</p>
+<div class="wrap" id="pesan">
+  <div class="grid" id="grid"></div>
+  <aside class="cart">
+    <h3>🛒 Pesananmu</h3>
+    <div id="items"><p class="empty">Belum ada pesanan.</p></div>
+    <div class="tot"><span>Total</span><span id="total">Rp0</span></div>
+    <input id="nama" placeholder="Nama pemesan">
+    <textarea id="alamat" rows="2" placeholder="Alamat / catatan"></textarea>
+    <button class="btn" id="order">Pesan Sekarang</button>
+  </aside>
+</div>
+<footer>© 2026 FreshSip – Jus buah segar setiap hari 🍓🍊🥭🥑🍍🍋</footer>
+<div id="modal"><div><h3>🎉 Pesanan Diterima!</h3><p id="mtxt"></p><a id="wal" class="btn" target="_blank" rel="noopener">Buka WhatsApp</a><br><br><button class="btn" onclick="document.getElementById('modal').style.display='none'">Tutup</button></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const P=[
+{n:"Jus Stroberi",h:12000,c:"#ff3b5c",t:"straw",d:"Manis asam, kaya vitamin C"},
+{n:"Jus Jeruk",h:10000,c:"#ff9a1f",t:"orange",d:"Segar peras asli tanpa gula"},
+{n:"Jus Mangga",h:8000,c:"#ffc21a",t:"mango",d:"Lembut, manis, wangi tropis"},
+{n:"Jus Alpukat",h:15000,c:"#7cb342",t:"avo",d:"Creamy dengan susu cokelat"},
+{n:"Jus Nanas",h:10000,c:"#f5d000",t:"pine",d:"Asam segar penghilang dahaga"},
+{n:"Jus Lemon",h:12000,c:"#f3e84a",t:"lemon",d:"Menyegarkan, kaya antioksidan"}];
+const rp=n=>"Rp"+n.toLocaleString("id-ID");
+const M=(g,c,x=0,y=0,z=0,s=[1,1,1])=>{const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:c,roughness:.4,metalness:.05}));m.position.set(x,y,z);m.scale.set(...s);return m};
+const S=(r)=>new THREE.SphereGeometry(r,28,28), C=(r,h,a)=>new THREE.ConeGeometry(r,h,a||16);
+function fruit(t){
+ const g=new THREE.Group(),leaf=(x,y,z,rz)=>{const l=M(C(.12,.5,8),"#2e9b3e",x,y,z,[1,1,.35]);l.rotation.z=rz;return l};
+ if(t=="straw"){g.add(M(S(1),"#e8102f",0,0,0,[.85,1,.85]));
+  for(let i=0;i<26;i++){const a=i*2.4,b=Math.acos(1-2*(i+.5)/26);g.add(M(S(.05),"#ffe27a",Math.sin(b)*Math.cos(a)*.86,Math.cos(b),Math.sin(b)*Math.sin(a)*.86))}
+  for(let i=0;i<6;i++){const l=leaf(Math.cos(i)*.3,1.02,Math.sin(i)*.3,0);l.rotation.set(Math.sin(i)*1.2,0,Math.cos(i)*1.2);g.add(l)}}
+ if(t=="orange"){g.add(M(S(1),"#ff8f0f"));g.add(M(S(.07),"#2e7d32",0,1,0));g.add(leaf(.25,1.05,0,-1.2));
+  const s=M(new THREE.CylinderGeometry(.9,.9,.2,32),"#ffb133",1.3,.2,.8);s.rotation.x=Math.PI/2;g.add(s);
+  const w=M(new THREE.CylinderGeometry(.8,.8,.22,32),"#ffd36b",1.3,.2,.8);w.rotation.x=Math.PI/2;g.add(w)}
+ if(t=="mango"){g.add(M(S(1),"#ffb41f",0,0,0,[1.05,1.2,.85]));g.add(M(S(.8),"#ff6a3d",.3,-.2,.3,[.8,.9,.4]));g.add(M(C(.08,.3,8),"#5a3a1a",0,1.2,0));g.add(leaf(.3,1.25,0,-1.1));g.add(leaf(-.3,1.2,0,1.1))}
+ if(t=="avo"){g.add(M(S(1),"#3f6b1f",0,-.2,0,[1,1,1]));g.add(M(S(.65),"#4a7c26",0,.85,0));
+  const cut=M(S(.75),"#d9e86a",1.5,0,.4,[1,1.1,.4]);g.add(cut);g.add(M(S(.32),"#7a4a22",1.5,-.1,.62))}
+ if(t=="pine"){g.add(M(S(1),"#f2c200",0,0,0,[.8,1.2,.8]));
+  for(let i=0;i<22;i++){const a=i*2.4,y=-1+(i%6)*.4;g.add(M(S(.09),"#b8860b",Math.cos(a)*.78,y+.1,Math.sin(a)*.78))}
+  for(let i=0;i<8;i++){const l=M(C(.13,.9,6),"#2e9b3e",Math.cos(i*.8)*.18,1.55,Math.sin(i*.8)*.18);l.rotation.set(Math.sin(i*.8)*.5,0,-Math.cos(i*.8)*.5);g.add(l)}}
+ if(t=="lemon"){g.add(M(S(1),"#fff04a",0,0,0,[1.2,.85,.85]));g.add(M(C(.15,.3,8),"#e6d02a",1.25,0,0)).rotation.z=-Math.PI/2;g.add(leaf(0,.85,0,.4));
+  const s=M(new THREE.CylinderGeometry(.75,.75,.15,32),"#fff7a0",.9,.1,1);s.rotation.x=Math.PI/2;g.add(s)}
+ return g}
+const scenes=[];
+function juice(cv,p,big){
+ const r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});r.setPixelRatio(Math.min(devicePixelRatio,2));
+ const w=cv.clientWidth,h=cv.clientHeight;r.setSize(w,h,false);
+ const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(36,w/h,.1,100);cam.position.set(0,1.4,big?9:8.4);cam.lookAt(0,.6,0);
+ sc.add(new THREE.AmbientLight("#fff",.8));const d=new THREE.DirectionalLight("#fff",1.1);d.position.set(4,6,5);sc.add(d);
+ const pl=new THREE.PointLight(p.c,.8,20);pl.position.set(-4,2,3);sc.add(pl);
+ const g=new THREE.Group();
+ g.add(M(new THREE.CylinderGeometry(.9,.72,1.9,40),p.c,0,0,0));
+ const top=M(new THREE.CylinderGeometry(.9,.9,.06,40),"#ffffff",0,.93,0);top.material.color.set(p.c);g.add(top);
+ const gl=new THREE.Mesh(new THREE.CylinderGeometry(1,.8,2.4,40,1,true),new THREE.MeshPhysicalMaterial({color:"#dff6ff",transparent:true,opacity:.28,roughness:.05,side:THREE.DoubleSide}));gl.position.y=.15;g.add(gl);
+ g.add(M(new THREE.CylinderGeometry(.8,.8,.1,40),"#cfeaf5",0,-1.05,0));
+ const st=M(new THREE.CylinderGeometry(.06,.06,2.8,12),"#ffffff",.25,.7,0);st.rotation.z=-.2;g.add(st);
+ const f=fruit(p.t);f.scale.setScalar(.5);f.position.set(big?1.7:1.5,-.3,.2);g.add(f);
+ const f2=fruit(p.t);f2.scale.setScalar(.32);f2.position.set(-1.4,1.7,0);g.add(f2);
+ g.position.y=-.3;sc.add(g);
+ let fl=[];if(big){P.forEach((q,i)=>{const x=fruit(q.t);x.scale.setScalar(.38);x.userData.a=i;sc.add(x);fl.push(x)})}
+ const o={r,sc,cam,g,f,f2,fl,vis:true};scenes.push(o);
+ new IntersectionObserver(e=>o.vis=e[0].isIntersecting).observe(cv);return o}
+const grid=document.getElementById("grid"),cart={};
+P.forEach((p,i)=>{cart[i]=0;const d=document.createElement("div");d.className="card";d.style.setProperty("--c",p.c);
+ d.innerHTML=`<canvas></canvas><h3>${p.n}</h3><small>${p.d}</small><div class="price">${rp(p.h)}</div><div class="qty"><button data-i="${i}" data-d="-1">−</button><span id="q${i}">0</span><button data-i="${i}" data-d="1">+</button></div>`;
+ grid.appendChild(d);juice(d.querySelector("canvas"),p,false)});
+juice(document.getElementById("hero3d"),P[1],true);
+let t=0;(function loop(){requestAnimationFrame(loop);t+=.016;
+ scenes.forEach((o,k)=>{if(!o.vis)return;o.g.rotation.y=t*.8+k;o.g.position.y=-.3+Math.sin(t*2+k)*.08;o.f.rotation.y=t;o.f2.rotation.y=-t*1.3;
+  o.fl.forEach(x=>{const a=t*.6+x.userData.a*1.047;x.position.set(Math.cos(a)*3.2,Math.sin(a*1.5)*1.2+.8,Math.sin(a)*2.2);x.rotation.y=t*1.5});
+  o.r.render(o.sc,o.cam)})})();
+function draw(){let h="",tot=0;P.forEach((p,i)=>{const q=cart[i];if(q){tot+=q*p.h;h+=`<div class="row"><span>${q}× ${p.n}</span><span>${rp(q*p.h)}</span></div>`;}document.getElementById("q"+i).textContent=q});
+ document.getElementById("items").innerHTML=h||'<p class="empty">Belum ada pesanan.</p>';document.getElementById("total").textContent=rp(tot);return tot}
+grid.addEventListener("click",e=>{const b=e.target.closest("button");let i,d;
+ if(b){i=b.dataset.i;d=+b.dataset.d}
+ else if(e.target.tagName=="CANVAS"){i=[...grid.children].indexOf(e.target.closest(".card"));d=1}
+ else return;
+ cart[i]=Math.max(0,cart[i]+d);draw()});
+document.getElementById("order").onclick=()=>{const tot=draw(),n=document.getElementById("nama").value.trim();
+ if(!tot){alert("Pilih jus dulu ya 🍹");return}if(!n){alert("Isi nama pemesan dulu ya");return}
+ const l=P.filter((p,i)=>cart[i]).map(p=>cart[P.indexOf(p)]+"× "+p.n).join(", ");
+ const det=P.map((p,i)=>cart[i]?"- "+cart[i]+"× "+p.n+" ("+rp(cart[i]*p.h)+")":"").filter(Boolean).join("\n");
+ const a=document.getElementById("alamat").value.trim();
+ const msg="Halo FreshSip, saya mau pesan:\n"+det+"\n\nTotal: "+rp(tot)+"\nNama: "+n+"\nAlamat/catatan: "+(a||"-");
+ const url="https://wa.me/6289525828125?text="+encodeURIComponent(msg);
+ document.getElementById("wal").href=url;
+ document.getElementById("mtxt").textContent="Terima kasih "+n+"! Pesanan: "+l+". Total "+rp(tot)+". Kami buka WhatsApp untuk mengirim pesananmu; jika tidak terbuka, tekan tombol di bawah.";
+ document.getElementById("modal").style.display="flex";
+ window.open(url,"_blank");
+ P.forEach((p,i)=>cart[i]=0);draw()};
+</script>
+</body>
+  </html>
